@@ -13,22 +13,18 @@ requirejs.config({
     baseUrl: '/base/src',
 
     paths: {
-        'jquery': '../lib/jquery.min',
+        'parser': 'parser',
         'underscore': '../lib/underscore.min',
-
-        'engine': 'logic/engine',
-        'parser': 'logic/parser',
-        'primes': 'logic/primes',
-        'table': 'views/table',
-        'arrow': 'views/arrow',
-        'error': 'views/error',
-        'keyboard': 'utils/keyboard',
-        'exception': 'exception',
-        'app': 'app',
+        'underscore-string': '../lib/underscore.string.min',
     },
+
 
     shim: {
         'underscore': {
+            exports: '_'
+        },
+        'underscore-string': {
+            deps: ['underscore'],
             exports: '_'
         },
     },

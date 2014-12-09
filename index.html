@@ -21,18 +21,25 @@
             <div class="ten wide column">
                 Add reasoning behind this demo ...
             </div>
+            <div class="ten wide column">
+                <div class="ui input command-bar">
+                  <input id="app-command-bar"
+                         type="text"
+                         placeholder="create todo my shopping list">
+                </div>
+            </div>
 
-            <div class="ten wide column row equal height">
-                <div class="four wide column floated left drop-panel"
+            <div class="fourteen wide column row equal height">
+                <div class="six wide column floated left drop-panel"
                      id="app-drop">
 
                 </div>
-                <div class="ten wide column floated right">
-                    <div class="app-raw-text panel">
+                <div class="eight wide column floated right">
+                    <div id="app-raw-text" class="panel">
                         Hey Maciej, <br>
                         <br>
                         I'm very glad that you've decided to come to my party! I'm sure it would be amazing. Since you've offered that you could cook how about you collect all ingredients for spring rolls and we prepare them together? If that fine with you please buy. 1-2 carrots, red pepper, cucumber, some mint,
-                        <div class="ui label orange">rice noodles<i class="delete icon"></i></div> (the thinner the better) and most important rice spring roll papers, hope it's not too complicated:-).
+                        rice noodles (the thinner the better) and most important rice spring roll papers, hope it's not too complicated:-).
 
                         Ah and also maybe some good wine? Red should be good.
                         <br>
@@ -44,12 +51,75 @@
                         All best,<br>
                         Janet
                     </div>
-                    <div class="ui divider"></div>
-                    <div class="panel">
-                        drop here
-                    </div>
                 </div>
             </div>
+        </div>
+
+        <div>
+            <script type="text/template" id="app-contact-template">
+                <div class="ui card">
+                    <div class="content">
+                        <a class="header"><%= name %></a>
+                        <div class="description" contenteditable>
+                            <%= description %>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <a>
+                            <i class="home icon"></i>
+                            <%= address %>
+                        </a>
+                        <a>
+                            <i class="call icon"></i>
+                            <%= mobile %>
+                        </a>
+                        <a>
+                            <i class="skype icon"></i>
+                            <%= skype %>
+                        </a>
+                    </div>
+                </div>
+            </script>
+
+
+            <script type="text/template" id="app-todo-template">
+                <div class="ui card">
+                    <div class="content">
+                        <a class="header"><%= name %></a>
+                        <div class="description" contenteditable>
+                            <%= description %>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <ul></ul>
+                    </div>
+                </div>
+            </script>
+
+
+            <script type="text/template" id="app-event-template">
+                <div class="ui card">
+                    <div class="content">
+                        <a class="header"><%= name %></a>
+                        <div class="description" contenteditable>
+                            <%= description %>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <div class="column">
+                            <i class="wait icon"></i>
+                            <span class="placeholder"></span>
+                        </div>
+                        <div class="column">
+                            <a>
+                                <i class="home icon"></i>
+                                <%= address %>
+                                <span class="placeholder"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </script>
         </div>
     </body>
 </html>
