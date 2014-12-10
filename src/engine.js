@@ -1,8 +1,5 @@
 
 define(['jquery', 'underscore'], function ($, _) {
-    var renderContact = _.template($('#app-contact-template').html()),
-        renderTodo = _.template($('#app-todo-template').html()),
-        renderEvent = _.template($('#app-event-template').html());
 
 // {
 //     name: 'Janet Smith',
@@ -12,7 +9,27 @@ define(['jquery', 'underscore'], function ($, _) {
 //     skype: 'janetatskype'
 // }
     var Engine = function (kwargs) {
+        // this.renderContact = _.template($('#app-contact-template').html()),
+        // this.renderTodo = _.template($('#app-todo-template').html()),
+        // this.renderEvent = _.template($('#app-event-template').html());
+
         this.$el = kwargs.$el;
+    };
+
+
+    Engine.prototype.inferEntityType = function(ciVariables) {
+
+        var types = _.unique(
+            _.map(ciVariables, function (v) { return v.type })),
+            map = {
+                'item': 'todo',
+                'address,email': 'contact',
+                'address,telephone': 'contact',
+                'email,telephone': 'contact',
+                'address,date': 'event',
+            };
+
+        return map[types.sort().toString()];
     };
 
 

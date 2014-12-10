@@ -10,46 +10,116 @@
         <link rel="stylesheet"
               type="text/css"
               href="lib/semantic.css" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="lib/sidebar.css" />
 
         <script data-main="src/app" src="lib/require.min.js"></script>
     </head>
     <body>
-        <div class="ui padded grid">
-            <div class="black column row">
-                <h2 class="ui inverted header">(CI) Variables</h2>
+        <div id="app-scenarios-links"
+             class="ui left vertical inverted sidebar menu">
+            <div class="header item">
+                Scenarios
             </div>
-            <div class="ten wide column">
-                Add reasoning behind this demo ...
-            </div>
-            <div class="ten wide column">
-                <div class="ui input command-bar">
-                  <input id="app-command-bar"
-                         type="text"
-                         placeholder="create todo my shopping list">
+            <a class="item">
+                CI Variables using HI
+                <div class="item">
+                    "enable" content through simple actions
+                </div>
+            </a>
+            <a class="item">
+                CI Variables through AI
+                <div class="item">
+                    help to discover CI Variables
+                </div>
+            </a>
+            <a class="item">
+                CI Variables through AI + HI
+                <div class="item">
+                    everybody learns!
+                </div>
+            </a>
+            <a class="item">
+                Queries -> adding to context
+            </a>
+            <a class="item">
+                How would you define contact|todo or event entity?
+                <div class="item">
+                    each entity has some features
+                </div>
+                <div class="item">
+                    is there a point of differentiating between them?
+                </div>
+                <div class="item">
+                    they are just containers of information! should behave
+                    differently based on the view (context)!
+                </div>
+            </a>
+            <a class="item">
+                Commands
+            </a>
+        </div>
+        <div class="pusher">
+            <div class="ui fixed inverted main menu">
+                <a id="app-show-scenarios" class="item">
+                    <i class="content icon"></i>
+                </a>
+                <div class="item header">
+                    (CI) Variables
                 </div>
             </div>
+            <div class="ui padded grid">
 
-            <div class="fourteen wide column row equal height">
-                <div class="six wide column floated left drop-panel"
-                     id="app-drop">
-
+                <div class="ten wide column">
+                    <div class="ui input command-bar">
+                      <input id="app-command-bar"
+                             type="text"
+                             placeholder="create todo my shopping list">
+                    </div>
                 </div>
-                <div class="eight wide column floated right">
-                    <div id="app-raw-text" class="panel">
-                        Hey Maciej, <br>
-                        <br>
-                        I'm very glad that you've decided to come to my party! I'm sure it would be amazing. Since you've offered that you could cook how about you collect all ingredients for spring rolls and we prepare them together? If that fine with you please buy. 1-2 carrots, red pepper, cucumber, some mint,
-                        rice noodles (the thinner the better) and most important rice spring roll papers, hope it's not too complicated:-).
 
-                        Ah and also maybe some good wine? Red should be good.
-                        <br>
-                        <br>
-                        I know that you're busy guy but please remember that the party is this Friday at 8 pm, please be on time!
-                        <br>
-                        Btw my address is 5 Johnson Court, Amazing Avenue<br>
-                        <br>
-                        All best,<br>
-                        Janet
+                <div class="fourteen wide column row equal height">
+                    <div class="six wide column floated left">
+                         <div class="black panel" id="app-drop-zone">
+
+                         </div>
+                         <div class="dark panel" id="app-objects-list" style="height: 40em;">
+
+                         </div>
+                    </div>
+                    <div class="eight wide column floated right">
+                        <div id="app-raw-text" class="panel">
+                                <div class="ui label">From:</div> janet.smith@edu.world
+                            <div class="ui divider"></div>
+                                <div class="ui label">Subject:</div> Are you ready for the party?
+                            <div class="ui divider"></div>
+                            Hey Gordon, <br>
+                            <br>
+                            I'm very glad that you've decided to come to my party! I'm sure it would be amazing. Since you've offered that you could cook how about you collect all ingredients for spring rolls and we prepare them together? If that fine with you please buy. 1-2 carrots, red pepper, cucumber, some mint,
+                            rice noodles (the thinner the better) and most important rice spring roll papers, hope it's not too complicated:-)
+
+                            Ah and also maybe some good wine? Red should be good.
+                            <br>
+                            <br>
+                            I know that you're busy guy but please remember that the party is this Friday at 8 pm, please be on time!
+                            <br>
+                            Btw my address is 5 Johnson Court, Amazing Avenue<br>
+                            <br>
+                            One last thing you've asked me last time about her phone number (you know whom I'm talking about;-)) so here it is 07999911111, good luck:-)<br>
+                            <br>
+                            All best,<br>
+                            Janet
+                        </div>
+                    </div>
+                    <div class="one wide column floated left">
+                        <div class="ui vertical buttons">
+                            <div class="ui yellow icon button"><i class="calendar icon"></i></div>
+                            <div class="ui green icon button"><i class="home icon"></i></div>
+                            <div class="ui blue icon button">@</div>
+                            <div class="ui red icon button"><i class="call icon"></i></div>
+                            <!-- <div class="ui purple icon button"><i class="asterisk icon"></i></div> -->
+                        </div>
                     </div>
                 </div>
             </div>

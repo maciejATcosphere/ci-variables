@@ -13,9 +13,14 @@ requirejs.config({
     baseUrl: '/base/src',
 
     paths: {
-        'parser': 'parser',
+        'jquery': '../lib/jquery.min',
         'underscore': '../lib/underscore.min',
         'underscore-string': '../lib/underscore.string.min',
+
+        'parser': 'parser',
+        'nlp': 'nlp',
+        'engine': 'engine',
+
     },
 
 
