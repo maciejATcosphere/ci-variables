@@ -49,7 +49,7 @@ require([
     'sidebar'
 ], function ($, _, Parser, Engine) {
     var parser = new Parser(),
-        engine = new Engine({$el: $('#app-drop')});
+        engine = new Engine({$el: $('#app-objects-list')});
 
     $(function () {
         $('#app-show-scenarios').on('click', function () {

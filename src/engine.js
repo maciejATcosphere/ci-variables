@@ -8,10 +8,11 @@ define(['jquery', 'underscore'], function ($, _) {
 //     mobile: '079999123456'
 //     skype: 'janetatskype'
 // }
+    renderContact = _.template($('#app-contact-template').html()),
+    renderTodo = _.template($('#app-todo-template').html()),
+    renderEvent = _.template($('#app-event-template').html());
+
     var Engine = function (kwargs) {
-        // this.renderContact = _.template($('#app-contact-template').html()),
-        // this.renderTodo = _.template($('#app-todo-template').html()),
-        // this.renderEvent = _.template($('#app-event-template').html());
 
         this.$el = kwargs.$el;
     };
