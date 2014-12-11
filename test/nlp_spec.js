@@ -154,4 +154,23 @@ define(['nlp'], function (nlp) {
         });
     });
 
+
+    describe('inferType', function () {
+
+        it("infers type of text correctly", function () {
+            var testCases = [
+                ['cucumber', 'item'],
+                ['2014-11-23', 'date'],
+                ['5 Johnson Court, Amazing Avenue', 'address'],
+                ['(0044)567-567-789', 'telephoneNumber'],
+                ['jordan1234@wp.pl', 'emailAddress'],
+            ];
+
+            testCases.forEach(function (testCase) {
+                expect(nlp.inferType(testCase[0])).toEqual(testCase[1]);
+            });
+        });
+
+
+    });
 });

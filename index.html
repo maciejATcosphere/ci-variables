@@ -28,20 +28,20 @@
                     "enable" content through simple actions
                 </div>
             </a>
-            <a class="item">
+            <a id="app-scenario-2" class="item">
                 CI Variables through AI
                 <div class="item">
                     help to discover CI Variables
                 </div>
             </a>
-            <a class="item">
+            <a id="app-scenario-3" class="item">
                 CI Variables through AI + HI
                 <div class="item">
                     everybody learns!
                 </div>
             </a>
-            <a class="item">
-                Queries -> adding to context
+            <a id="app-scenario-4" class="item">
+                Queries + Update + Creation = The same!
             </a>
             <a class="item">
                 How would you define contact|todo or event entity?
@@ -72,7 +72,8 @@
             <div class="ui padded grid">
 
                 <div class="ten wide column">
-                    <div class="ui input command-bar">
+                    <div id="app-query-input"
+                         class="hidden ui input command-bar">
                       <input id="app-command-bar"
                              type="text"
                              placeholder="create todo my shopping list">
@@ -80,12 +81,14 @@
                 </div>
 
                 <div class="fourteen wide column row equal height">
-                    <div class="six wide column floated left">
-                         <div class="black panel" id="app-drop-zone">
+                    <div id="app-query-output"
+                         class="hidden six wide column floated left">
+                         <div class="black panel app-drop-zone">
 
                          </div>
-                         <div class="dark panel" id="app-objects-list" style="height: 40em;">
-
+                         <div class="yes no border dark panel"
+                              id="app-object-list"
+                              style="height: 40em; overflow: scroll;">
                          </div>
                     </div>
                     <div class="eight wide column floated right">
@@ -106,18 +109,30 @@
                             <br>
                             Btw my address is 5 Johnson Court, Amazing Avenue<br>
                             <br>
-                            One last thing you've asked me last time about her phone number (you know whom I'm talking about;-)) so here it is 07999911111, good luck:-)<br>
+                            One last thing you've asked me last time about her phone number (you know whom I'm talking about;-)) so here it is 07999911111 (she has an apartment at High Street 8), good luck:-)<br>
                             <br>
                             All best,<br>
                             Janet
                         </div>
                     </div>
                     <div class="one wide column floated left">
-                        <div class="ui vertical buttons">
-                            <div class="ui yellow icon button"><i class="calendar icon"></i></div>
-                            <div class="ui green icon button"><i class="home icon"></i></div>
-                            <div class="ui blue icon button">@</div>
-                            <div class="ui red icon button"><i class="call icon"></i></div>
+                        <div id="app-ai-entity-finder"
+                             class="hidden ui vertical buttons">
+                            <div id="app-find-date"
+                                 class="ui yellow icon button">
+                                <i class="calendar icon"></i>
+                            </div>
+                            <div id="app-find-address"
+                                 class="ui green icon button">
+                                <i class="home icon"></i></div>
+                            <div id="app-find-emailAddress"
+                                 class="ui blue icon button">
+                                @
+                            </div>
+                            <div id="app-find-telephoneNumber"
+                                 class="ui red icon button">
+                                <i class="call icon"></i>
+                            </div>
                             <!-- <div class="ui purple icon button"><i class="asterisk icon"></i></div> -->
                         </div>
                     </div>
@@ -135,18 +150,28 @@
                         </div>
                     </div>
                     <div class="extra content">
-                        <a>
-                            <i class="home icon"></i>
-                            <%= address %>
-                        </a>
-                        <a>
-                            <i class="call icon"></i>
-                            <%= mobile %>
-                        </a>
-                        <a>
-                            <i class="skype icon"></i>
-                            <%= skype %>
-                        </a>
+                        <table class="ui celled striped table">
+                          <tbody>
+                            <tr>
+                              <td><i class="home icon"></i></td>
+                              <td class="right aligned collapsing app-drop-zone">
+                                  <%= address %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td><i class="call icon"></i></td>
+                              <td class="right aligned collapsing app-drop-zone">
+                                  <%= telephoneNumber %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>@</td>
+                              <td class="right aligned collapsing app-drop-zone">
+                                  <%= emailAddress %>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                     </div>
                 </div>
             </script>
@@ -155,13 +180,26 @@
             <script type="text/template" id="app-todo-template">
                 <div class="ui card">
                     <div class="content">
-                        <a class="header"><%= name %></a>
+                        <div class="header" contenteditable>
+                            <%= name %>
+                        </div>
                         <div class="description" contenteditable>
                             <%= description %>
                         </div>
                     </div>
                     <div class="extra content">
-                        <ul></ul>
+                        <table class="ui celled striped table">
+                          <tbody>
+                            <% _.each(item, function(i) { %>
+                                <tr>
+                                  <td contenteditable>Item</td>
+                                  <td class="right aligned collapsing app-drop-zone">
+                                    <%= i %>
+                                  </td>
+                                </tr>
+                            <% }); %>
+                          </tbody>
+                        </table>
                     </div>
                 </div>
             </script>
@@ -176,17 +214,22 @@
                         </div>
                     </div>
                     <div class="extra content">
-                        <div class="column">
-                            <i class="wait icon"></i>
-                            <span class="placeholder"></span>
-                        </div>
-                        <div class="column">
-                            <a>
-                                <i class="home icon"></i>
-                                <%= address %>
-                                <span class="placeholder"></span>
-                            </a>
-                        </div>
+                        <table class="ui celled striped table">
+                          <tbody>
+                            <tr>
+                              <td><i class="wait icon"></i></td>
+                              <td class="right aligned collapsing app-drop-zone">
+                                  <%= date %>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td><i class="home icon"></i></td>
+                              <td class="right aligned collapsing app-drop-zone">
+                                  <%= address %>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                     </div>
                 </div>
             </script>

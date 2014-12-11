@@ -8,67 +8,36 @@ define(['jquery', 'underscore'], function ($, _) {
 //     mobile: '079999123456'
 //     skype: 'janetatskype'
 // }
-    renderContact = _.template($('#app-contact-template').html()),
-    renderTodo = _.template($('#app-todo-template').html()),
-    renderEvent = _.template($('#app-event-template').html());
 
-    var Engine = function (kwargs) {
+    var Engine = function () {};
 
-        this.$el = kwargs.$el;
-    };
-
-
+    /*
+     * FIXME: create proper inference algorithm to calculate which
+     * kind of entity user wants to deal with
+     */
     Engine.prototype.inferEntityType = function(ciVariables) {
-
         var types = _.unique(
-            _.map(ciVariables, function (v) { return v.type })),
-            map = {
-                'item': 'todo',
-                'address,email': 'contact',
-                'address,telephone': 'contact',
-                'email,telephone': 'contact',
-                'address,date': 'event',
-            };
+                _.map(ciVariables, function (v) { return v.type })),
 
-        return map[types.sort().toString()];
+            definitions = {
+                'todo': ['item'],
+                'contact': ['address', 'emailAddress', 'telephoneNumber'],
+                'event': ['address', 'date'],
+            },
+            entities = [];
+
+        _.pairs(definitions).forEach(function (pair) {
+            var entityType = pair[0],
+                definition = pair[1];
+
+            if (_.intersection(definition, types).length > 0) {
+                entities.push(entityType);
+            }
+        });
+
+        return entities;
     };
 
-
-    Engine.prototype.getContext = function(objectName, data) {
-        var map = {
-            contact: {
-                name: '',
-                description: 'description',
-                address: '',
-                mobile: '',
-                skype: '',
-            },
-            todo: {
-                name: '',
-                description: 'description',
-            },
-            event: {
-                name: '',
-                description: 'description',
-                address: '',
-            },
-        };
-
-        return _.extend(map[objectName], data);
-    };
-
-
-    Engine.prototype.render = function(objectName, data) {
-        var renderMap = {
-                'contact': renderContact,
-                'todo': renderTodo,
-                'event': renderEvent,
-            },
-            render = renderMap[objectName],
-            context = this.getContext(objectName, data);
-
-        this.$el.prepend($(render(context)));
-    };
 
     return Engine;
 });

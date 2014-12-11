@@ -68,11 +68,21 @@ define([], function () {
     };
 
 
+    var inferType = function (text) {
+        if (isDate(text)) { return 'date'; }
+        if (isTelephoneNumber(text)) { return 'telephoneNumber'; }
+        if (isEmailAddress(text)) { return 'emailAddress'; }
+        if (isAddress(text)) { return 'address'; }
+        if (isItem(text)) { return 'item'; }
+    };
+
+
     return {
         isDate: isDate,
         isAddress: isAddress,
         isTelephoneNumber: isTelephoneNumber,
         isEmailAddress: isEmailAddress,
         isItem: isItem,
+        inferType: inferType,
     };
 });
