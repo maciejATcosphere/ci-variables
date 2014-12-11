@@ -63,7 +63,8 @@ require([
             'telephoneNumber': [],
             'address': [],
             'item': [],
-        };
+        },
+        currentConcept;
 
 
     $(function () {
@@ -82,14 +83,7 @@ require([
     };
 
 
-    var renderToken = _.template(
-        '<div class="ui label <%= color %> noselect app-semantic-token"' +
-        '     draggable="true" ' +
-        '     data-isRoot="<%= isRoot %>"' +
-        '     data-conceptid="<%= conceptId %>">' +
-        '    <%= text %>' +
-        '</div>');
-
+    var renderToken = _.template($('#app-concept-template').html());
 
     var render = function (context) {
         return $(renderToken(context))[0];
@@ -99,6 +93,7 @@ require([
     var replaceSelectedText = function () {
         var selection,
             text,
+            detail,
             type,
             range;
 
@@ -113,19 +108,31 @@ require([
                 if (text.length > 0) {
                     // add concept
                     conceptId += 1;
-                    concepts[conceptId] = {type: type};
-                    conceptsContext[type].push(renderToken({
-                        text: text,
-                        color: typeToColor[type],
+                    currentConcept = {type: type};
+
+                    if (type === 'date') {
+                        if (/this Friday at 8 pm/.test(text)) {
+                            detail = '12/12/2014 8pm';
+                        }
+                    }
+                    concepts[conceptId] = currentConcept;
+                    conceptsContext[type].push({
                         conceptId: conceptId,
-                        isRoot: false,
-                    }));
+                        html: renderToken({
+                            text: text,
+                            detail: detail,
+                            color: typeToColor[type],
+                            conceptId: conceptId,
+                            isRoot: false,
+                        }),
+                    });
 
                     updateObject();
 
                     range.deleteContents();
                     range.insertNode(render({
                         text: text,
+                        detail: undefined,
                         color: typeToColor[type],
                         conceptId: conceptId,
                         isRoot: true,
@@ -148,23 +155,41 @@ require([
     /*
      * Object view
      */
+    // recently added
     var updateObject = function () {
         var $el = $('#app-object-list'),
             entities = engine.inferEntityType(_.values(concepts)),
-            context = {};
+            context = {},
+            entitiesOrder = [];
+
+        if (currentConcept) {
+            entitiesOrder = engine.inferEntityType([currentConcept]);
+        }
 
         _.each(_.pairs(conceptsContext), function (pair) {
             var conceptType = pair[0],
                 conceptsArray = pair[1];
 
             if (conceptType === 'item') {
-                context[conceptType] = conceptsArray;
+                context[conceptType] = _.map(
+                    conceptsArray, function (c) { return c.html; });
             } else {
                 if (conceptsArray.length > 0) {
-                    context[conceptType] = conceptsArray[0];
+                    context[conceptType] = conceptsArray[0].html;
                 }
             }
         });
+
+
+        /*
+         * Order elements as suggested by entitiesOrder
+         */
+        if (entitiesOrder.length > 0) {
+            var intersection = _.intersection(entitiesOrder, entities),
+                difference = _.difference(entities, entitiesOrder);
+
+            entities = _.union(intersection, difference);
+        }
 
         _.each(entities, function (entity) {
             // view.clear();
@@ -177,7 +202,19 @@ require([
 
         var $this = $(this);
 
+        // conceptsContext
+        var concept = concepts[$this.data('conceptid')];
+
+        conceptsContext[concept.type] = _.filter(
+            conceptsContext[concept.type],
+            function (e) {
+                if (e.conceptId != $this.data('conceptid')) {
+                    return e
+                };
+            });
+
         delete concepts[$this.data('conceptid')];
+
         clearSelection($this);
 
         updateObject();
@@ -255,17 +292,31 @@ require([
                 entities[type].forEach(function (text) {
                     // add concept
                     conceptId += 1;
-                    concepts[conceptId] = {type: type};
-                    conceptsContext[type].push(renderToken({
-                        text: text,
-                        color: typeToColor[type],
+
+                    var detail;
+                    if (type === 'date') {
+                        if (/this Friday at 8 pm/.test(text)) {
+                            detail = '12/12/2014 8pm';
+                        }
+                    }
+
+                    currentConcept = {type: type};
+                    concepts[conceptId] = currentConcept;
+                    conceptsContext[type].push({
                         conceptId: conceptId,
-                        isRoot: false,
-                    }));
+                        html: renderToken({
+                            text: text,
+                            detail: detail,
+                            color: typeToColor[type],
+                            conceptId: conceptId,
+                            isRoot: false,
+                        }),
+                    });
 
                     $this.html($this.html().replace(text, renderToken({
                         color: typeToColor[type],
                         text: text,
+                        detail: undefined,
                         conceptId: conceptId,
                         isRoot: true,
                     })))

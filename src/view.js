@@ -1,5 +1,5 @@
 
-define(['jquery', 'underscore'], function ($, _) {
+define(['jquery', 'underscore', 'underscore-string'], function ($, _) {
 
     var renderContact = _.template($('#app-contact-template').html()),
         renderTodo = _.template($('#app-todo-template').html()),
@@ -30,8 +30,21 @@ define(['jquery', 'underscore'], function ($, _) {
             this.$children[objectName].remove();
         }
 
+        // artificial data base retrieval
+        if (objectName === 'contact') {
+            // pull contact details
+            var emailAddress = _.str.strip($(context.emailAddress).text());
+            if (emailAddress === 'janet.smith@edu.world') {
+                context.name = 'Janet Smith';
+                context.image = 'janet';
+                context.description = 'Loves parties! and swimming';
+                context.telephoneNumber = '07777744331';
+            }
+        }
+
+
         this.$children[objectName] = $(render(context));
-        this.$el.prepend(this.$children[objectName]);
+        this.$el.append(this.$children[objectName]);
     };
 
 
@@ -48,6 +61,7 @@ define(['jquery', 'underscore'], function ($, _) {
                 address: '',
                 telephoneNumber: '',
                 emailAddress: '',
+                image: '',
             },
             todo: {
                 name: 'Name?',

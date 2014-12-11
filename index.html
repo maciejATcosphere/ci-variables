@@ -141,8 +141,27 @@
         </div>
 
         <div>
+            <script type="text/template" id="app-concept-template">
+              <div class="ui label <%= color %> noselect app-semantic-token"
+                   draggable="true"
+                   data-isRoot="<%= isRoot %>"
+                   data-conceptid="<%= conceptId %>">
+
+                  <%= text %>
+                  <% if (detail) { %>
+                    <br>
+                    <div class="detail"><%= detail %></div>
+                  <% } %>
+              </div>
+            </script>
+
             <script type="text/template" id="app-contact-template">
                 <div class="ui card">
+                    <% if (image) { %>
+                    <div class="image">
+                      <img src="src/static/images/<%= image %>.jpg">
+                    </div>
+                    <% } %>
                     <div class="content">
                         <a class="header"><%= name %></a>
                         <div class="description" contenteditable>
